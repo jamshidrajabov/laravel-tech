@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title','Bosh sahifa')
 @section('content')
 <!-- Carousel Start -->
     <div class="container-fluid p-0">

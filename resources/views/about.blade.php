@@ -9,13 +9,13 @@
     <div class="container py-5">
         <div class="row align-items-center py-4">
             <div class="col-md-6 text-center text-md-left">
-                <h1 class="display-4 mb-4 mb-md-0 text-secondary text-uppercase">About</h1>
+                <h1 class="display-4 mb-4 mb-md-0 text-secondary text-uppercase">Biz haqimizda</h1>
             </div>
             <div class="col-md-6 text-center text-md-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="btn btn-sm btn-outline-light" href="/">Home</a>
+                    <a class="btn btn-sm btn-outline-light" href="/">Bosh sahifa</a>
                     <i class="fas fa-angle-double-right text-light mx-2"></i>
-                    <a class="btn btn-sm btn-outline-light disabled" href="">About</a>
+                    <a class="btn btn-sm btn-outline-light disabled" href="">Biz haqimizda</a>
                 </div>
             </div>
         </div>
