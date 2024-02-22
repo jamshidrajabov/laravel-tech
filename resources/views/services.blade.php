@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Biz haqimizda')
+@section('title','Xizmatlar')
 
 @section('content')
 <!-- Page Header Start -->
