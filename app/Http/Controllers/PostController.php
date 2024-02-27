@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -46,20 +47,19 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(PostRequest $request)
-    {   if ($request->hasFile('photo'))
+    {   
+        $path='post-photos/blank-user.png';
+        if ($request->hasFile('photo'))
         {
             $timestamp = time();
             $name=$request->ip()."_".$timestamp;
             $path=$request->file('photo')->storeAs('post-photos',$name);   
         }
-        $timestamp = time();
-        $name=$request->ip()."_".$timestamp;
-        $path=$request->file('photo')->storeAs('post-photos',$name);
         $post=Post::create([
             'title'=>$request->title,
             'short_content'=>$request->short_content,
             'content'=>$request->content,
-            'photo'=>$path ?? null
+            'photo'=>$path
         ]);
         return redirect(route('posts.index'));
     }
@@ -77,28 +77,65 @@ class PostController extends Controller
       
         ]);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit',[
+            'post'=>$post
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        $path=$post->photo;
+        if ($request->hasFile('photo'))
+        {
+            if (isset($post->photo))
+            {
+                Storage::delete($post->photo);
+            }
+                $timestamp = time();
+                $name=$request->ip()."_".$timestamp;
+                $path=$request->file('photo')->storeAs('post-photos',$name);
+        }
+            $post->update([
+            'title'=>$request->title,
+            'short_content'=>$request->short_content,
+            'content'=>$request->content,
+            'photo'=>$path
+        ]);
+        return redirect(route('posts.show',[
+            'post'=>$post->id 
+            ]));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        if (isset($post->photo))
+            {
+                Storage::delete($post->photo);
+            }
+        $post->delete();
+            return redirect(route('posts.index'));
+    }
+    public function delete_image(Post $post)
+    {   if ($post->photo!='post-photos/blank-user.png')
+        {
+            storage::delete($post->photo);
+            $post->photo='post-photos/blank-user.png';
+            $post->save();
+        }
+        
+        return redirect(route('posts.edit',[
+        'post'=>$post->id 
+        ]));
     }
 }

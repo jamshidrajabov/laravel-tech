@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Portfolio')
+@section('title','Post')
 
 @section('content')
    <!-- Page Header Start -->
@@ -27,7 +27,16 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
+                <div class="text-right">
+                    <a class="btn btn-sm btn-dark" href="{{route('posts.edit',['post'=>$post->id])}}">Tahrirlash</a>
+                    <form method="POST"  action="{{route('posts.destroy',['post'=>$post->id])}}" enctype="multipart/form-data">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">O`chirish</button>
+                    </form> 
+                </div>
                 <div class="mb-5">
+                    
                     <div class="d-flex mb-2">
                         <a class="text-secondary text-uppercase font-weight-medium" href="">Admin</a>
                         <span class="text-primary px-2">|</span>
@@ -37,7 +46,6 @@
                     </div>
                     <h1 class="section-title mb-3">{{$post->title}}</h1>
                 </div>
-
                 <div class="mb-5">
                     <img style="height: 400px; width:100px" class="img-fluid rounded w-100 mb-4" src="{{asset('storage/'.$post->photo)}}" alt="Image">
                     <p>{{$post->content}}</p>                   
@@ -58,7 +66,6 @@
                         ipsum magna dolor lorem dolore, elitr aliquyam takimata sea kasd dolores diam, amet et est
                         accusam labore eirmod vero et voluptua. Amet labore clita duo et no.</p>
                 </div>
-
                 <div class="mb-5">
                     <h3 class="mb-4 section-title">3 Comments</h3>
                     <div class="media mb-4">

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Portfolio')
+@section('title','Postlar')
 
 @section('content')
    <!-- Page Header Start -->

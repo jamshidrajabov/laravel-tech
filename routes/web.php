@@ -36,5 +36,5 @@ Route::put('posts/{post}/edit',[PostController::class,'update'])->name('posts.up
 Route::delete('posts/{post}/delete',[PostController::class,'delete'])->name('posts.delete');
 
 */
-
+Route::get('delete_image/{post}',[PostController::class,'delete_image'])->name('delete_image');
 Route::resource('posts',PostController::class);
