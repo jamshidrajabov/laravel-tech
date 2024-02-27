@@ -13,25 +13,9 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {/*
-     $post = Post::create([
-        'title' => 'London to Paris',
-        'short_content'=>'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit, odit consequuntur. Architecto neque, similique dignissimos nesciunt consectetur voluptatum deserunt esse.',
-        'content'=>' Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae molestias, 
-        dolor expedita dolore illum, assumenda numquam repellendus tenetur hic 
-        veritatis similique est eos suscipit incidunt sunt repudiandae nobis, 
-        maiores corrupti tempora esse nesciunt ipsum. Iusto ab voluptatem, eaque 
-        corrupti totam officiis? Excepturi error alias tempore ipsam inventore 
-        corrupti est, possimus corporis saepe quia sapiente fugit, minus praesentium 
-        vitae laboriosam ad voluptate? Nostrum, vero aliquid harum quasi consequatur 
-        quod praesentium delectus rerum tempore suscipit voluptatibus vitae autem. 
-        Earum corporis officia provident nam qui mollitia, sapiente esse tempore 
-        soluta obcaecati animi necessitatibus, fugiat numquam suscipit, dicta 
-        non sequi explicabo quam. Nisi, velit!',
-        'photo'=>'storage/545.png'
-       
-    ]);*/
-   $posts = Post::all();    
+    {
+      
+   $posts=Post::latest()->paginate(6);
     return view('posts.index',['posts'=>$posts]);
     }
 

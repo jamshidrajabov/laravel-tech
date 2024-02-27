@@ -51,7 +51,8 @@
                 <a class="btn btn-sm btn-primary py-2" href="{{route('posts.show',['post'=>$post->id])}}">Batafsil</a>
             </div>
             @endforeach
-           
+            <br>
+                       <!--
             <div class="col-12">
                 <nav aria-label="Page navigation">
                   <ul class="pagination pagination-lg justify-content-center mb-0">
@@ -73,7 +74,9 @@
                   </ul>
                 </nav>
             </div>
+            -->
         </div>
+        {{$posts->links()}}
     </div>
 </div>
 <!-- Blog End -->

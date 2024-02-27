@@ -32,6 +32,7 @@
                     <form method="POST"  action="{{route('posts.destroy',['post'=>$post->id])}}" enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
+                        <br>
                         <button type="submit" class="btn btn-sm btn-danger">O`chirish</button>
                     </form> 
                 </div>
