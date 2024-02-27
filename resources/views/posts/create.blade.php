@@ -15,7 +15,7 @@
             <div class="col-lg-7 mb-5 mb-lg-0">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form action="{{route('posts.store')}}" method="POST">
+                    <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
                             <div class="col-sm-12 control-group">
@@ -26,21 +26,16 @@
                                     @enderror
                                 </p>
                             </div>
-                            {{--
                                 <div class="col-sm-12 control-group">
                                 <label for="formFile" class="form-label">Post uchun rasm tanlang</label>
-                                <input class="form-control" type="file" id="formFile">
+                                <input name="photo" class="form-control" type="file" id="formFile">
                                 <p class="help-block text-danger"> 
                                 @error('photo')
                                 <div style="color: red" class="">{{ $message }}</div>
                                 @enderror
-                            </p>
+                                </p>
                                 </div>  
-                            --}}
-                            
-                        
-                            </div>
-                          
+                        </div>
                         <div class="control-group">
                             <textarea class="form-control p-4" rows="3" name="short_content" placeholder="Post haqida qisqacha">{{old('short_content')}}</textarea>
                             <p class="help-block text-danger"> 

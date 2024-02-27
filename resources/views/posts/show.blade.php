@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <img class="img-fluid rounded w-100 mb-4" src="/img/carousel-1.jpg" alt="Image">
+                    <img style="height: 400px; width:100px" class="img-fluid rounded w-100 mb-4" src="{{asset('storage/'.$post->photo)}}" alt="Image">
                     <p>{{$post->content}}</p>                   
                         est
                         sanctus sanctus. Clita dolores sit kasd diam takimata justo diam lorem sed. Magna amet sed
@@ -151,7 +151,7 @@
                     <h3 class="mb-4 section-title">Oxirgi postlar</h3>
                     @foreach ($recent_posts as $recent_post)
                     <div class="d-flex align-items-center border-bottom mb-3 pb-3">
-                        <img class="img-fluid rounded" src="/img/blog-1.jpg" style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                        <img class="img-fluid rounded" src="{{asset('storage/'.$recent_post->photo)}}" style="width: 80px; height: 80px; object-fit: cover;" alt="">
                         <div class="d-flex flex-column pl-3">
                             <a class="text-dark mb-2" href="">{{$recent_post->title}}</a>
                             <div class="d-flex">

@@ -25,6 +25,7 @@ class PostRequest extends FormRequest
             'title' => 'required|max:128',
             'short_content' => ['required','max:300'],
             'content' => 'required',
+            'photo' => ['nullable','max:2048','image'],
         ];
     }
     public function messages(): array
@@ -34,7 +35,9 @@ class PostRequest extends FormRequest
         'title.max' => 'Postning sarlavha satri uzunligi 128 belgidan kam bo`lishi kerak',
         'short_content.required' => 'Postning qisqacha mazmuni kiritilmagan',
         'short_content.max' => 'Postning qisqacha mazmuni 300 belgidan kam bo`lishi kerak',
-        'content.required' => 'Postning to`liq mazmuni kiritilmagan',        
+        'content.required' => 'Postning to`liq mazmuni kiritilmagan',
+        'photo.max' => 'Rasmning hajmi 2 Mb dan oshmasligi kerak.',        
+        'photo.image' => 'Filega faqat rasm kiritishingiz kerak.',        
     ];
 }
 }

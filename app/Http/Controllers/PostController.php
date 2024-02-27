@@ -46,12 +46,20 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(PostRequest $request)
-    {
+    {   if ($request->hasFile('photo'))
+        {
+            $timestamp = time();
+            $name=$request->ip()."_".$timestamp;
+            $path=$request->file('photo')->storeAs('post-photos',$name);   
+        }
+        $timestamp = time();
+        $name=$request->ip()."_".$timestamp;
+        $path=$request->file('photo')->storeAs('post-photos',$name);
         $post=Post::create([
             'title'=>$request->title,
             'short_content'=>$request->short_content,
             'content'=>$request->content,
-            'photo'=>'/img/adding.png'
+            'photo'=>$path ?? null
         ]);
         return redirect(route('posts.index'));
     }
