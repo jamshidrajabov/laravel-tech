@@ -39,14 +39,23 @@
                 <div class="mb-5">
                     
                     <div class="d-flex mb-2">
-                        <a class="text-secondary text-uppercase font-weight-medium" href="">Admin</a>
-                        <span class="text-primary px-2">|</span>
-                        <a class="text-secondary text-uppercase font-weight-medium" href="">Cleaning</a>
-                        <span class="text-primary px-2">|</span>
                         <a class="text-secondary text-uppercase font-weight-medium" href="">{{$post->created_at}}</a>
                     </div>
                     <div class="d-flex mb-2">
-                        <a class="text-danger text-uppercase font-weight-medium" href="">{{$post->category->name}}</a>
+                        @foreach ($post->Tags as $tag)
+                        <a class="text-danger text-uppercase font-weight-medium" >{{$tag->name}}</a>
+                      @if ($loop->last)
+                          
+                      @else
+                      <span class="text-primary px-2">|</span>
+                      @endif                   
+                       
+                        @endforeach
+                        
+                    </div>
+                    <div class="d-flex mb-2">
+                        
+                        <a class="text-white d-flex flex-column text-center bg-secondary rounded mb-3 py-2 px-4" href="">{{$post->category->name}}</a>
                     </div>
                     <h1 class="section-title mb-3">{{$post->title}}</h1>
                 </div>
@@ -140,33 +149,25 @@
                     </div>
                 </div>
                 <div class="mb-5">
-                    <h3 class="mb-4 section-title">Categories</h3>
+                    <h3 class="mb-4 section-title">Kategoriyalar</h3>
                     <ul class="list-inline m-0">
+                        @foreach ($categories as $category)
                         <li class="mb-1 py-2 px-3 bg-light d-flex justify-content-between align-items-center">
-                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>Web Design</a>
-                            <span class="badge badge-primary badge-pill">150</span>
+                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>{{$category->name}}</a>
+                            <span class="badge badge-primary badge-pill">{{$category->posts()->count()}}</span>
                         </li>
-                        <li class="mb-1 py-2 px-3 bg-light d-flex justify-content-between align-items-center">
-                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>Web Development</a>
-                            <span class="badge badge-primary badge-pill">131</span>
-                        </li>
-                        <li class="mb-1 py-2 px-3 bg-light d-flex justify-content-between align-items-center">
-                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>Online Marketing</a>
-                            <span class="badge badge-primary badge-pill">78</span>
-                        </li>
-                        <li class="mb-1 py-2 px-3 bg-light d-flex justify-content-between align-items-center">
-                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>Keyword Research</a>
-                            <span class="badge badge-primary badge-pill">56</span>
-                        </li>
-                        <li class="py-2 px-3 bg-light d-flex justify-content-between align-items-center">
-                            <a class="text-dark" href="#"><i class="fa fa-angle-right text-secondary mr-2"></i>Email Marketing</a>
-                            <span class="badge badge-primary badge-pill">98</span>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="mb-5">
-                    <img src="/img/blog-1.jpg" alt="" class="img-fluid rounded">
+                    <h3 class="mb-4 section-title">Taglar</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach ($tags as $tag)
+                        <a href="" class="btn btn-outline-secondary m-1">{{$tag->name}}</a>
+                        @endforeach
+                    </div>
                 </div>
+               
                 <div class="mb-5">
                     <h3 class="mb-4 section-title">Oxirgi postlar</h3>
                     @foreach ($recent_posts as $recent_post)
@@ -187,17 +188,7 @@
                 <div class="mb-5">
                     <img src="/img/blog-2.jpg" alt="" class="img-fluid rounded">
                 </div>
-                <div class="mb-5">
-                    <h3 class="mb-4 section-title">Tag Cloud</h3>
-                    <div class="d-flex flex-wrap m-n1">
-                        <a href="" class="btn btn-outline-secondary m-1">Design</a>
-                        <a href="" class="btn btn-outline-secondary m-1">Development</a>
-                        <a href="" class="btn btn-outline-secondary m-1">Marketing</a>
-                        <a href="" class="btn btn-outline-secondary m-1">SEO</a>
-                        <a href="" class="btn btn-outline-secondary m-1">Writing</a>
-                        <a href="" class="btn btn-outline-secondary m-1">Consulting</a>
-                    </div>
-                </div>
+               
                 <div class="mb-5">
                     <img src="/img/blog-3.jpg" alt="" class="img-fluid rounded">
                 </div>

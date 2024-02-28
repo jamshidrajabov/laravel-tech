@@ -22,7 +22,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(),
             'short_content' => fake()->sentence(5),
             'content' => fake()->paragraph(25),
-            'photo' => null           
+            'photo' => 'post-photos/blank-user.png'           
         ];
     }
 }

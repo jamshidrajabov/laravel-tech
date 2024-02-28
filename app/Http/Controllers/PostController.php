@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,7 +27,8 @@ class PostController extends Controller
     public function create()
     {
         return view('posts.create',[
-            'categories'=>Category::all()
+            'categories'=>Category::all(),
+            'tags' => Tag::all(),
         ]);
     }
 
@@ -50,6 +52,12 @@ class PostController extends Controller
             'content'=>$request->content,
             'photo'=>$path
         ]);
+        if (isset($request->tags))
+        {
+            foreach ($request->tags as $tag) {
+                $post->tags()->attach($tag);
+            }
+        }
         return redirect(route('posts.index'));
     }
 
@@ -63,7 +71,8 @@ class PostController extends Controller
         return view('posts.show',[
             'post'=>$post,
             'recent_posts'=>$recent_posts,
-      
+            'tags' => Tag::all(),
+            'categories' => Category::all()
         ]);
     }
     /**
@@ -86,7 +95,10 @@ class PostController extends Controller
         {
             if (isset($post->photo))
             {
-                Storage::delete($post->photo);
+                if ($post->photo!='post-photos/blank-user.png')
+                    {
+                        storage::delete($post->photo);
+                    }
             }
                 $timestamp = time();
                 $name=$request->ip()."_".$timestamp;
@@ -110,7 +122,10 @@ class PostController extends Controller
     {
         if (isset($post->photo))
             {
-                Storage::delete($post->photo);
+                if ($post->photo!='post-photos/blank-user.png')
+                    {
+                        storage::delete($post->photo);
+                    }
             }
         $post->delete();
             return redirect(route('posts.index'));

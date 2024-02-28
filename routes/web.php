@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
@@ -27,17 +28,10 @@ Route::get('projects',[PageController::class,'projects'])->name('projects');
 Route::get('contact',[PageController::class,'contact'])->name('contact');
 
 
-/*
+Route::get('login',[AuthController::class,'login'])->name('login');
+Route::get('register',[AuthController::class,'register'])->name('register');
 
-Route::get('posts',[PostController::class,'index'])->name('index');
-Route::get('posts/{post}',[PostController::class,'show'])->name('show');
-Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
-Route::post('posts/create',[PostController::class,'store'])->name('posts.store');
-Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
-Route::put('posts/{post}/edit',[PostController::class,'update'])->name('posts.update');
-Route::delete('posts/{post}/delete',[PostController::class,'delete'])->name('posts.delete');
 
-*/
 Route::get('delete_image/{post}',[PostController::class,'delete_image'])->name('delete_image');
 Route::resource('posts',PostController::class);
 Route::resource('comments',CommentController::class);

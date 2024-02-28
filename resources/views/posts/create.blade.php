@@ -34,6 +34,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-sm-12 control-group">
+                                <label for="category" class="form-label">Post taglarini tanlang</label>
+                                <select multiple size="{{$tags->count()}}" class="form-select check"   name="tags[]" id="tag" aria-label="Default select example">
+                                    @foreach ($tags as $tag)
+                                        <option  value="{{$tag->id}}">{{$tag->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                                 <div class="col-sm-12 control-group">
                                 <label for="formFile" class="form-label">Post uchun rasm tanlang</label>
                                 <input name="photo" class="form-control" type="file" id="formFile">
