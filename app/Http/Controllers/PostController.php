@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create',[
+            'categories'=>Category::all()
+        ]);
     }
 
     /**
@@ -40,7 +43,9 @@ class PostController extends Controller
             $path=$request->file('photo')->storeAs('post-photos',$name);   
         }
         $post=Post::create([
+            'user_id' => 1,
             'title'=>$request->title,
+            'category_id' => $request->category_id,
             'short_content'=>$request->short_content,
             'content'=>$request->content,
             'photo'=>$path

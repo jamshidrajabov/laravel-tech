@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +40,4 @@ Route::delete('posts/{post}/delete',[PostController::class,'delete'])->name('pos
 */
 Route::get('delete_image/{post}',[PostController::class,'delete_image'])->name('delete_image');
 Route::resource('posts',PostController::class);
+Route::resource('comments',CommentController::class);

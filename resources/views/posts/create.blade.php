@@ -26,6 +26,14 @@
                                     @enderror
                                 </p>
                             </div>
+                            <div class="col-sm-12 control-group">
+                                <label for="category" class="form-label">Post kategoriyasini tanlang</label>
+                                <select class="form-select"   name="category_id" id="category" aria-label="Default select example">
+                                    @foreach ($categories as $category)
+                                        <option selected value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                                 <div class="col-sm-12 control-group">
                                 <label for="formFile" class="form-label">Post uchun rasm tanlang</label>
                                 <input name="photo" class="form-control" type="file" id="formFile">
