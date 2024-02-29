@@ -6,11 +6,18 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+        //$this->authorizeResource(post::class,'post');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -40,12 +47,12 @@ class PostController extends Controller
         $path='post-photos/blank-user.png';
         if ($request->hasFile('photo'))
         {
-            $timestamp = time();
+            $timestamp =Carbon::now()->micro; 
             $name=$request->ip()."_".$timestamp;
             $path=$request->file('photo')->storeAs('post-photos',$name);   
         }
         $post=Post::create([
-            'user_id' => 1,
+            'user_id' => auth()->id(),
             'title'=>$request->title,
             'category_id' => $request->category_id,
             'short_content'=>$request->short_content,
@@ -66,13 +73,14 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $recent_posts=Post::latest()->get()->except($id)->take(5);
+        $recent_posts=Post::latest()->get()->except($id)->take(3);
         $post=Post::find($id);
         return view('posts.show',[
             'post'=>$post,
             'recent_posts'=>$recent_posts,
             'tags' => Tag::all(),
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'user_name' => auth()->user()->name ??null,
         ]);
     }
     /**
@@ -80,9 +88,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit',[
-            'post'=>$post
-        ]);
+        $this->authorize('update',$post);
+        
+            return view('posts.edit',[
+                'post'=>$post
+            ]);
+        
+        
     }
 
     /**
@@ -90,6 +102,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        $this->authorize('update',$post);
         $path=$post->photo;
         if ($request->hasFile('photo'))
         {
@@ -100,7 +113,7 @@ class PostController extends Controller
                         storage::delete($post->photo);
                     }
             }
-                $timestamp = time();
+                $timestamp =Carbon::now()->micro;                
                 $name=$request->ip()."_".$timestamp;
                 $path=$request->file('photo')->storeAs('post-photos',$name);
         }
@@ -120,6 +133,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete',$post);
         if (isset($post->photo))
             {
                 if ($post->photo!='post-photos/blank-user.png')
@@ -131,7 +145,9 @@ class PostController extends Controller
             return redirect(route('posts.index'));
     }
     public function delete_image(Post $post)
-    {   if ($post->photo!='post-photos/blank-user.png')
+    {   
+        $this->authorize('delete',$post);
+        if ($post->photo!='post-photos/blank-user.png')
         {
             storage::delete($post->photo);
             $post->photo='post-photos/blank-user.png';

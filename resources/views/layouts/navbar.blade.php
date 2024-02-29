@@ -15,11 +15,18 @@
             <a href="{{route('contact')}}" class="nav-item nav-link">Biz bilan aloqa</a>
         </div>
         @auth
-        <a href="{{route('posts.create')}}" class="btn btn-primary mr-3 d-none d-lg-block">Post yaratish</a>  
-        @endauth
+        <a href="{{route('posts.create')}}" class="btn btn-primary mr-3 d-none d-lg-block">Post yaratish</a>
+        <form action="{{route('logout')}}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-dark mr-3 d-none d-lg-block">Chiqish</button>
+        </form>
+        @else
         <a href="{{route('login')}}" class="btn btn-primary mr-3 d-none d-lg-block">Kirish</a>
+        <a href="{{route('register')}}" class="btn btn-primary mr-3 d-none d-lg-block">Ro`yxatdan o`tish</a>    
+        @endauth
+        
        <!-- 
-        <a href="{{route('register')}}" class="btn btn-primary mr-3 d-none d-lg-block">Ro`yxatdan o`tish</a>
+        
         --> 
     </div>
 </nav>

@@ -28,16 +28,23 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="text-right">
+                    @auth
+                    @canany(['update','delete'], $post)
+                        
+                    
                     <a class="btn btn-sm btn-dark" href="{{route('posts.edit',['post'=>$post->id])}}">Tahrirlash</a>
+                    
                     <form method="POST"  action="{{route('posts.destroy',['post'=>$post->id])}}" enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <br>
-                        <button type="submit" class="btn btn-sm btn-danger">O`chirish</button>
+                        <button type="submit" class="btn btn-sm btn-danger">O'chirish</button>
                     </form> 
+                    @endcanany 
+                    @endauth
+                    
                 </div>
                 <div class="mb-5">
-                    
                     <div class="d-flex mb-2">
                         <a class="text-secondary text-uppercase font-weight-medium" href="">{{$post->created_at}}</a>
                     </div>
@@ -85,7 +92,14 @@
                     <div class="media mb-4">
                         <img src="/img/user.jpg" alt="Image" class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px;">
                         <div class="media-body">
-                            <h6>{{$comment->user->name}}<small><i> {{$comment->created_at}}</i></small></h6>
+                            <h6>
+                                @if ($user_name==$comment->user->name)
+                                <div style="color: red">Siz</div>
+                                @else
+                                {{$comment->user->name}}
+                                @endif
+                                
+                                <small><i> {{$comment->created_at}}</i></small></h6>
                             <p>{{$comment->body}}</p>
                             <!--
                             <button class="btn btn-sm btn-light">Reply</button>
@@ -99,6 +113,7 @@
 
                 <div class="bg-light rounded p-5">
                     <h3 class="mb-4 section-title">Izoh qoldirish</h3>
+                    @auth
                     <form action="{{route('comments.store')}}"  method="POST">
                         @csrf
                         <!-- 
@@ -127,13 +142,23 @@
                             <input type="submit" value="Jo`natish" class="btn btn-primary">
                         </div>
                     </form>
+                    @else
+                    <div class="alert alert-warning"> izoh qoldirish uchun <a href="{{route('login')}}">kiring</a></div>
+                    @endauth
+                    
                 </div>
             </div>
 
             <div class="col-lg-4 mt-5 mt-lg-0">
                 <div class="d-flex flex-column text-center bg-secondary rounded mb-5 py-5 px-4">
                     <img src="/img/user.jpg" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
-                    <h3 class="text-white mb-3">John Doe</h3>
+                    <h3 class="text-white mb-3">
+                        @if ($user_name==$post->user->name)
+                                Siz
+                                @else
+                                {{$post->user->name}}
+                                @endif
+                        </h3>
                     <p class="text-white m-0">Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum,
                         ipsum
                         ipsum sit no ut est. Guber ea ipsum erat kasd amet est elitr ea sit.</p>
