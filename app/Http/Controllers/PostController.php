@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Http\Requests\PostRequest;
+use App\Jobs\ChangePost;
+use App\Jobs\PostTitleChange;
+use App\Jobs\UploadBigFile;
+use App\Mail\SendInfo;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\PostCreatedd;
 
 class PostController extends Controller
 {
@@ -44,6 +51,8 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {   
+
+        
         $path='post-photos/blank-user.png';
         if ($request->hasFile('photo'))
         {
@@ -59,12 +68,21 @@ class PostController extends Controller
             'content'=>$request->content,
             'photo'=>$path
         ]);
+
+        
+        Mail::to($request->user())->queue((new SendInfo($post))->onQueue('sendmail')->delay(now()->addSeconds(60)));
+        PostTitleChange::dispatch($post)->onQueue('titlesave');
+
         if (isset($request->tags))
         {
             foreach ($request->tags as $tag) {
                 $post->tags()->attach($tag);
             }
         }
+
+        
+        
+        
         return redirect(route('posts.index'));
     }
 
